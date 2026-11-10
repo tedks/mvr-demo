@@ -1,6 +1,6 @@
 # Bazel package graph
 
-The first child-owned Bazel target is `//typescript:typecheck`. It compiles the existing workshop client from `typescript/src/index.ts` with TypeScript 5.6.3 and the committed pnpm lock, then emits JavaScript. It does **not** execute the script: its `dryRun()` call would contact Sui mainnet.
+The first child-owned Bazel target is `//typescript:typecheck`. It compiles the existing workshop client from `typescript/src/index.ts` with TypeScript 5.6.3 (the exact version in the committed pnpm lock), then emits JavaScript. It does **not** execute the script: its `dryRun()` call would contact Sui mainnet. Bazel may fetch pinned build dependencies during module resolution; "offline" here means no chain or wallet runtime action.
 
 With Bazel 8.7.0 available, build from this repository root:
 

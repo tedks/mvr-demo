@@ -13,6 +13,7 @@ typescript_bin.tsc_binary(name = "child_tsc")
 ts_project(
     name = "compiled",
     srcs = ["src/index.ts"],
+    data = ["package.json"],
     tsconfig = "tsconfig.json",
     out_dir = "dist",
     root_dir = "src",

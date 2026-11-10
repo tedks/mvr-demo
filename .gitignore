@@ -1,3 +1,4 @@
 node_modules
+/bazel-*
 build
 .DS_STORE
