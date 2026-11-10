@@ -1,0 +1,29 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@mvr_demo_npm//:defs.bzl", "npm_link_all_packages")
+load("@mvr_demo_npm//typescript:typescript/package_json.bzl", typescript_bin = "bin")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(["package.json", "pnpm-lock.yaml", "tsconfig.json"])
+
+npm_link_all_packages(name = "node_modules")
+typescript_bin.tsc_binary(name = "child_tsc")
+
+# The emitted JavaScript is a build artifact; running it would contact mainnet.
+ts_project(
+    name = "compiled",
+    srcs = ["src/index.ts"],
+    data = ["package.json"],
+    tsconfig = "tsconfig.json",
+    out_dir = "dist",
+    root_dir = "src",
+    supports_workers = 0,
+    transpiler = "tsc",
+    tsc = ":child_tsc",
+    deps = [":node_modules"],
+)
+
+filegroup(
+    name = "typecheck",
+    srcs = [":compiled"],
+)
